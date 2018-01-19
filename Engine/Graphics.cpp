@@ -316,6 +316,59 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+void Graphics::DrawRect(RectI rect, Color c)
+{
+	for (int y = rect.top; y < rect.bottom; y++)
+	{
+		for (int x = rect.left; x < rect.right; x++)
+		{
+			PutPixel(x, y, c);
+		}
+	}
+}
+
+void Graphics::DrawRect(VecI pos, int size, Color c)
+{
+	for (int y = pos.y; y < pos.y + size; y++)
+	{
+		for (int x = pos.x; x < pos.x + size; x++)
+		{
+			PutPixel(x, y, c);
+		}
+	}
+}
+
+void Graphics::DrawActor(VecI pos, int size, Color c)
+{
+	int xStart = std::max(pos.x - size, 0);
+	int xEnd = std::min(pos.x + size, ScreenWidth);
+	int yStart = std::max(pos.y - size, 0);
+	int yEnd = std::min(pos.y + size,ScreenHeight);
+	
+	for (int y = yStart; y < yEnd; y++)
+	{
+		for (int x = xStart; x < xEnd; x++)
+		{
+			PutPixel(x, y, c);
+		}
+	}
+}
+
+void Graphics::DrawCircle(VecI pos, int rad, Color c)
+{
+	for (int y = pos.y - rad; y <= pos.y + 2 * rad; y++)
+	{
+		for (int x = pos.x - rad; x <= pos.x + 2 * rad; x++)
+		{
+			int distanceSq = (x - pos.x) * (x - pos.x) + (y - pos.y) * (y - pos.y);
+			if (distanceSq < rad * rad)
+			{
+				PutPixel(x, y, c);
+			}
+		}
+	}
+}
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception
