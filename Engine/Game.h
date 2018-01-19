@@ -24,8 +24,10 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "FrameTimer.h"
-#include "Hero.h"
-#include "Boss.h"
+#include "Board.h"
+#include "Goal.h"
+#include "Wall.h"
+#include "Bot.h"
 
 class Game
 {
@@ -46,7 +48,9 @@ private:
 	/********************************/
 	/*  User Variables              */
 	FrameTimer ft;
-	Hero hero;
-	Boss boss;
+	Board board;
+	Goal goal;
+	Wall wall;
+	Bot bot;
 	/********************************/
 };

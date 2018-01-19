@@ -4,6 +4,7 @@
 #include "Rect.h"
 #include <vector>
 
+
 class Tile
 {
 public:
@@ -24,25 +25,45 @@ public:
 		assert(tileType == TileType::Goal || tileType == TileType::Bot);
 		if (tileType == TileType::Floor)
 		{
-			SetTile( TileType::Wall);
+			SetTile(TileType::Wall);
 		}
 		else
 		{
 			SetTile(TileType::Floor);
 		}
 	}
+	void UnSetGoal()
+	{
+		assert(tileType != TileType::Goal);
+		SetTile(TileType::Floor);
+	}
+	void Clear()
+	{
+		SetTile(TileType::Floor);
+	}
+	void ClearWall()
+	{
+		if (tileType == TileType::Wall)
+		{
+			SetTile(TileType::Floor);
+		}
+	}
+	void UnSetBot()
+	{
+		assert(tileType != TileType::Bot);
+		SetTile(TileType::Floor);
+	}
 	void SetGoal()
 	{
 		assert(tileType == TileType::Wall || tileType == TileType::Bot);
 		SetTile(TileType::Goal);
-
 	}
 	void SetBot()
 	{
 		assert(tileType == TileType::Wall || tileType == TileType::Goal);
 		SetTile(TileType::Bot);
 	}
-	void Draw(const VecI& pos,const int& size,Graphics& gfx) const
+	void Draw(const VecI& pos, const int& size, Graphics& gfx) const
 	{
 		gfx.DrawRect(pos, size, color);
 	}
@@ -96,23 +117,42 @@ public:
 		{
 			for (int x = 0; x < width; x++)
 			{
-				TileAt(x, y).Draw({ x + padding , y + padding }, tileSize - padding, gfx);
+				TileAt(x, y).Draw({ x * tileSize + padding , y * tileSize + padding }, tileSize - padding, gfx);
 			}
 		}
 	}
-private:
-	const Tile& TileAt(int x,int y) const
+	void ClearBoard()
+	{
+		for (auto& t : tiles)
+		{
+			t.Clear();
+		}
+	}
+	void ClearWall()
+	{
+		for (auto& t : tiles)
+		{
+			t.ClearWall();
+		}
+	}
+	VecI posAtMouse(const VecI& mousePos)
+	{
+		return VecI(mousePos.x / tileSize, mousePos.y / tileSize);
+	}
+	const Tile& TileAt(int x, int y) const
 	{
 		return tiles[y * width + x];
 	}
+
 	Tile& TileAt(int x, int y)
 	{
 		return tiles[y * width + x];
 	}
 private:
+private:
 	std::vector<Tile> tiles;
-	static constexpr int tileSize = 10;
+	static constexpr int tileSize = 20;
 	int width = Graphics::ScreenWidth / tileSize;
 	int height = Graphics::ScreenHeight / tileSize;
-	static constexpr int padding = 1;
+	static constexpr int padding = 2;
 };

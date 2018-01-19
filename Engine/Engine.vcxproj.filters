@@ -72,16 +72,16 @@
     <ClInclude Include="Vec2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actor.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="Boss.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="Hero.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
     <ClInclude Include="Board.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="Goal.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="Bot.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
@@ -115,12 +115,6 @@
     </ClCompile>
     <ClCompile Include="FrameTimer.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Boss.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
-    <ClCompile Include="Hero.cpp">
-      <Filter>Source Files\game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

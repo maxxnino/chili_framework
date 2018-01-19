@@ -39,10 +39,50 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
+
+	if (wnd.kbd.KeyIsPressed('Q'))
+	{
+		board.ClearBoard();
+	}
+
+	if (wnd.kbd.KeyIsPressed('E'))
+	{
+		board.ClearWall();
+	}
+	
+	if (wnd.kbd.KeyIsPressed(VK_CONTROL))
+	{
+		while (!wnd.mouse.IsEmpty())
+		{
+			const Mouse::Event e = wnd.mouse.Read();
+			if (e.GetType() == Mouse::Event::Type::LPress)
+			{
+				goal.ChangePos(wnd.mouse.GetPos(), board);
+			}
+			if (e.GetType() == Mouse::Event::Type::RPress)
+			{
+				bot.ChangePos(wnd.mouse.GetPos(), board);
+			}
+		}
+	}
+	else if (wnd.mouse.RightIsPressed())
+	{
+		wall.BuildWall(wnd.mouse.GetPos(), board);
+	}
+	else
+	{
+		while (!wnd.mouse.IsEmpty())
+		{
+			const Mouse::Event e = wnd.mouse.Read();
+			if (e.GetType() == Mouse::Event::Type::LPress)
+			{
+				wall.ToggleWall(wnd.mouse.GetPos(), board);
+			}
+		}
+	}
 }
 
 void Game::ComposeFrame()
 {
-	boss.Draw(gfx);
-	hero.Draw(gfx);
+	board.Draw(gfx);
 }
