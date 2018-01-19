@@ -39,7 +39,10 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
-
+	if (wnd.kbd.KeyIsPressed(VK_SPACE))
+	{
+		isstatr = true;
+	}
 	if (wnd.kbd.KeyIsPressed('Q'))
 	{
 		board.ClearBoard();
@@ -79,6 +82,11 @@ void Game::UpdateModel()
 				wall.ToggleWall(wnd.mouse.GetPos(), board);
 			}
 		}
+	}
+
+	if (isstatr)
+	{
+		bot.Update(goal,board);
 	}
 }
 

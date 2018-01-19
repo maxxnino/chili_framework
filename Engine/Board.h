@@ -13,7 +13,7 @@ public:
 		Goal,
 		Bot,
 		Wall,
-		Floor
+		Floor,
 	};
 public:
 	Tile(TileType tileType = TileType::Floor)
@@ -22,7 +22,7 @@ public:
 	}
 	void ToggleWall()
 	{
-		assert(tileType == TileType::Goal || tileType == TileType::Bot);
+		assert(tileType == TileType::Wall || tileType == TileType::Floor);
 		if (tileType == TileType::Floor)
 		{
 			SetTile(TileType::Wall);
@@ -34,7 +34,7 @@ public:
 	}
 	void UnSetGoal()
 	{
-		assert(tileType != TileType::Goal);
+		assert(tileType == TileType::Goal);
 		SetTile(TileType::Floor);
 	}
 	void Clear()
@@ -50,22 +50,40 @@ public:
 	}
 	void UnSetBot()
 	{
-		assert(tileType != TileType::Bot);
+		assert(tileType == TileType::Bot);
 		SetTile(TileType::Floor);
 	}
 	void SetGoal()
 	{
-		assert(tileType == TileType::Wall || tileType == TileType::Bot);
+		assert(tileType == TileType::Floor || tileType == TileType::Goal);
 		SetTile(TileType::Goal);
 	}
 	void SetBot()
 	{
-		assert(tileType == TileType::Wall || tileType == TileType::Goal);
+		assert(tileType == TileType::Floor || tileType == TileType::Bot);
 		SetTile(TileType::Bot);
 	}
 	void Draw(const VecI& pos, const int& size, Graphics& gfx) const
 	{
-		gfx.DrawRect(pos, size, color);
+		if (tileType == TileType::Floor)
+		{
+			if (isPath)
+			{
+				gfx.DrawRect(pos, size, Color((unsigned char)158, (unsigned char)111, (unsigned char)139));
+			}
+			else if (isCheck)
+			{
+				gfx.DrawRect(pos, size, Color((unsigned char) 0, (unsigned char)0, (unsigned char)100 ));
+			}
+			else
+			{
+				gfx.DrawRect(pos, size, color);
+			}
+		}
+		else
+		{
+			gfx.DrawRect(pos, size, color);
+		}
 	}
 	const TileType& GetTileType() const
 	{
@@ -93,6 +111,9 @@ private:
 		}
 		tileType = newTile;
 	}
+public:
+	bool isCheck = false;
+	bool isPath = false;
 private:
 	TileType tileType = TileType::Floor;
 	Color color;

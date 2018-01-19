@@ -52,5 +52,6 @@ private:
 	Goal goal;
 	Wall wall;
 	Bot bot;
+	bool isstatr = false;
 	/********************************/
 };

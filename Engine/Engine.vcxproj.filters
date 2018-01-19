@@ -84,6 +84,9 @@
     <ClInclude Include="Bot.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
+    <ClInclude Include="AStart.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
