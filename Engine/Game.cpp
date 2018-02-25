@@ -26,6 +26,7 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd )
 {
+	actor = &hero;
 }
 
 void Game::Go()
@@ -39,6 +40,19 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
+	while (!wnd.mouse.IsEmpty())
+	{
+		Mouse::Event e = wnd.mouse.Read();
+		if (e.GetType() == Mouse::Event::Type::LPress)
+		{
+			actor = &boss;
+		}
+		if (e.GetType() == Mouse::Event::Type::RPress)
+		{
+			actor = &hero;
+		}
+	}
+	Input.handleInput(wnd.kbd,*actor,dt);
 }
 
 void Game::ComposeFrame()

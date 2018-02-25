@@ -26,6 +26,7 @@
 #include "FrameTimer.h"
 #include "Hero.h"
 #include "Boss.h"
+#include "InputHandler.h"
 
 class Game
 {
@@ -48,5 +49,7 @@ private:
 	FrameTimer ft;
 	Hero hero;
 	Boss boss;
+	InputHandler Input;
+	Actor* actor = nullptr;
 	/********************************/
 };

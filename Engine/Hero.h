@@ -1,6 +1,5 @@
 #pragma once
 #include "Actor.h"
-#include "Skill.h"
 
 class Hero : public Actor
 {
