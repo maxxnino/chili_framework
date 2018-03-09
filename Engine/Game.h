@@ -24,9 +24,9 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "FrameTimer.h"
-#include "Hero.h"
-#include "Boss.h"
-#include "InputHandler.h"
+#include "Actor.h"
+#include <vector>
+#include <random>
 
 class Game
 {
@@ -47,9 +47,7 @@ private:
 	/********************************/
 	/*  User Variables              */
 	FrameTimer ft;
-	Hero hero;
-	Boss boss;
-	InputHandler Input;
-	Actor* actor = nullptr;
+	Actor hero;
+	std::mt19937 rng;
 	/********************************/
 };

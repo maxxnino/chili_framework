@@ -21,12 +21,13 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd )
+	wnd(wnd),
+	gfx(wnd),
+	hero({ 400.0f,300.0f }, 20.0f, Colors::Blue, 300.0f),
+	rng(std::random_device()())
 {
-	actor = &hero;
 }
 
 void Game::Go()
@@ -40,23 +41,30 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
-	while (!wnd.mouse.IsEmpty())
+	VecF dir = { 0.0f,0.0f };
+	if (wnd.kbd.KeyIsPressed('A'))
 	{
-		Mouse::Event e = wnd.mouse.Read();
-		if (e.GetType() == Mouse::Event::Type::LPress)
-		{
-			actor = &boss;
-		}
-		if (e.GetType() == Mouse::Event::Type::RPress)
-		{
-			actor = &hero;
-		}
+		dir.x = -1.0f;
 	}
-	Input.handleInput(wnd.kbd,*actor,dt);
+	if (wnd.kbd.KeyIsPressed('D'))
+	{
+		dir.x = 1.0f;
+	}
+	if (wnd.kbd.KeyIsPressed('W'))
+	{
+		dir.y = -1.0f;
+	}
+	if (wnd.kbd.KeyIsPressed('S'))
+	{
+		dir.y = 1.0f;
+	}
+	
+	hero.Update(dir,dt);
 }
 
 void Game::ComposeFrame()
 {
-	boss.Draw(gfx);
+	//boss.Draw(gfx);
+	
 	hero.Draw(gfx);
 }
