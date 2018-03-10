@@ -28,6 +28,12 @@ Game::Game(MainWindow& wnd)
 	hero({ 400.0f,300.0f }, 20.0f, Colors::Blue, 300.0f),
 	rng(std::random_device()())
 {
+	std::uniform_int_distribution<int> xDist(100, 700);
+	std::uniform_int_distribution<int> yDist(100, 500);
+	for (size_t i = 0; i < 10; i++)
+	{
+		walls.emplace_back(RectI({ xDist(rng),yDist(rng) }, 50, 50));
+	}
 }
 
 void Game::Go()
@@ -63,10 +69,15 @@ void Game::UpdateModel()
 	{
 		mouseEvent.push_back(wnd.mouse.Read().GetType());
 	}
-	hero.Update(dir,dt, mouseEvent,wnd.mouse);
+	hero.Update(dir,dt, mouseEvent,wnd.mouse, walls);
 }
 
 void Game::ComposeFrame()
 {
+	for (auto& w : walls)
+	{
+		gfx.DrawRect(w, Colors::Red);
+	}
+	
 	hero.Draw(gfx);
 }

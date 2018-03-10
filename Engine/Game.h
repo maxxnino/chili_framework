@@ -49,5 +49,6 @@ private:
 	FrameTimer ft;
 	Actor hero;
 	std::mt19937 rng;
+	std::vector<RectI> walls;
 	/********************************/
 };
