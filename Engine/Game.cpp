@@ -58,13 +58,15 @@ void Game::UpdateModel()
 	{
 		dir.y = 1.0f;
 	}
-	
-	hero.Update(dir,dt);
+	std::vector<Mouse::Event::Type> mouseEvent;
+	while (!wnd.mouse.IsEmpty())
+	{
+		mouseEvent.push_back(wnd.mouse.Read().GetType());
+	}
+	hero.Update(dir,dt, mouseEvent,wnd.mouse);
 }
 
 void Game::ComposeFrame()
 {
-	//boss.Draw(gfx);
-	
 	hero.Draw(gfx);
 }
