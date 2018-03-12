@@ -25,14 +25,15 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	hero({ 400.0f,300.0f }, 20.0f, Colors::Blue, 300.0f),
+	hero({ 400.0f,300.0f }, 20.0f, Colors::Blue, 1500.0f,physicEngine),
 	rng(std::random_device()())
 {
 	std::uniform_int_distribution<int> xDist(100, 700);
 	std::uniform_int_distribution<int> yDist(100, 500);
+	std::uniform_int_distribution<int> vel(-400, 400);
 	for (size_t i = 0; i < 10; i++)
 	{
-		walls.emplace_back(RectI({ xDist(rng),yDist(rng) }, 50, 50));
+		physicEngine.AddPhysicObject(BoxPhysic({ (float)xDist(rng),(float)yDist(rng) }, 20.0f, { (float)vel(rng),(float)vel(rng) }));
 	}
 }
 
@@ -69,15 +70,26 @@ void Game::UpdateModel()
 	{
 		mouseEvent.push_back(wnd.mouse.Read().GetType());
 	}
-	hero.Update(dir,dt, mouseEvent,wnd.mouse, walls);
+	hero.Update(dir, dt, mouseEvent, wnd.mouse, physicEngine.GetPhysicObjects()[hero.GetIndexPhysicObject()]);
+	for (auto& o : physicEngine.GetPhysicObjects())
+	{
+		VecF dir =  physicEngine.GetPhysicObjects()[hero.GetIndexPhysicObject()].GetPosition() - o.GetPosition();
+		float lenSq = (dir * dt * 0.8f).GetLengthSq();
+		if (lenSq < 400.0f * 400.0f)
+		{
+			o.UpdateVel(dir * dt * 0.8f);
+		}
+		
+	}
+	physicEngine.Update(dt);
 }
 
 void Game::ComposeFrame()
 {
-	for (auto& w : walls)
+	for (auto& w : physicEngine.GetPhysicObjects())
 	{
-		gfx.DrawRect(w, Colors::Red);
+		gfx.DrawRect(w.GetRect(), Colors::Red);
 	}
-	
-	hero.Draw(gfx);
+
+	hero.Draw(gfx, physicEngine.GetPhysicObjects()[hero.GetIndexPhysicObject()].GetPosition());
 }

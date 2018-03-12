@@ -84,6 +84,12 @@
     <ClInclude Include="BulletState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BoxPhysic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicEngine.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
@@ -120,6 +126,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxPhysic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

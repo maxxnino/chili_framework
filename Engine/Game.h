@@ -27,6 +27,7 @@
 #include "Actor.h"
 #include <vector>
 #include <random>
+#include "PhysicEngine.h"
 
 class Game
 {
@@ -47,8 +48,8 @@ private:
 	/********************************/
 	/*  User Variables              */
 	FrameTimer ft;
+	PhysicEngine physicEngine;
 	Actor hero;
 	std::mt19937 rng;
-	std::vector<RectI> walls;
 	/********************************/
 };
